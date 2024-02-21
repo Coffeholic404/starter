@@ -9,17 +9,17 @@ let taqe = [
 ];
 
 let { name, age } = taqe[0];
-console.log(`My name is ${name}, and i'm ${age} years old`);//just a classic example 🙂
+// console.log(`My name is ${name}, and i'm ${age} years old`);//just a classic example 🙂
 
 // plus If we only care about some of the properties, we can omit the others
 let { name: name1 } = taqe[1];//i changed the name here to name1 cus name is already decleared
-console.log(name1);
+// console.log(name1);
 
 //object are not in order that mean my destructruring varible names order doesn't matter
 
 //arrays on theother hand and in order therefor order is important
 let [one, two, three] = [1, 2, 3];
-console.log(one, three);
+// console.log(one, three);
 
 
 //the array constructor has two additional static methods to create arrays: from() and of()
@@ -29,7 +29,7 @@ console.log(one, three);
 
 //strings will be broken up into an array instance using from()
 
-console.log(Array.from("Taqe")); //["T", "a", "q", "e"]
+// console.log(Array.from("Taqe")); //["T", "a", "q", "e"]
 
 //Sets and Maps can be converted into a new array instance using from()
 
@@ -39,8 +39,8 @@ const m = new Map()
 
 const s = new Set().add(1).add(2).add(3).add(4);
 
-console.log(Array.from(m));
-console.log(Array.from(s));
+// console.log(Array.from(m));
+// console.log(Array.from(s));
 
 //any iterable object can be used
 const iter = {
@@ -54,13 +54,13 @@ const iter = {
     }
 }
 
-console.log(Array.from(iter));
+// console.log(Array.from(iter));
 
 //the arguments objects can now easily be casted into an array:
 function getArgsArray() {
     return Array.from(arguments);
 }
-console.log(getArgsArray(6,7,8,9));
+// console.log(getArgsArray(6,7,8,9));
 
 //Array.from() also accepts a second optional map function argument.this allows you to augment the new array's values without creating an intermediate array first, which is the case if the same were performed with Array.from().map(). a third optional argument specifies the value of (this) inside the map function 
 //Array.from(object, mapFunction, thisValue);
@@ -69,8 +69,8 @@ const a1 = [1, 2, 3, 4];
 const a2 = Array.from(a1, (x) => x**2);
 const a3 = Array.from(a1, function(x) {return x**this.exponent}, {exponent: 2});
 
-console.log(a2);
-console.log(a3);
+// console.log(a2);
+// console.log(a3);
 
 //simple Array methods
 
@@ -146,7 +146,37 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
+let arr = ['a', 'b', 'c', 'd', 'e'];
+//slice
+// console.log(arr.slice(2)); //['c', 'd', 'e']
+// console.log(arr.slice(2, 4)); //['c', 'd']
 
+//REVERSE
+let arr2 = ['a', 'b', 'c', 'd', 'e'];
+// console.log(arr2.reverse()); //['e', 'd', 'c', 'b', 'a']
+
+
+//looping arrays:forEach
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// for (const movement of movements) {
+//   if (movement > 0) {
+//     console.log(`you deposited ${movement}`);
+//   }
+//   else {
+//     console.log(`you withdrew ${Math.abs(movement)}`);
+//   }
+//   ;
+// }
+
+movements.forEach((movement) => {
+  if (movement > 0) {
+        console.log(`you deposited ${movement}`);
+      }
+      else {
+        console.log(`you withdrew ${Math.abs(movement)}`);
+      }
+      ;
+})
