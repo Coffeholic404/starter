@@ -4,8 +4,8 @@
 // By "extracting" values from an object with their property names
 
 let taqe = [
-    { name: 'Taqe', age: 24 },
-    { name: 'Ali', age: 23 },
+  { name: 'Taqe', age: 24 },
+  { name: 'Ali', age: 23 },
 ];
 
 let { name, age } = taqe[0];
@@ -34,8 +34,8 @@ let [one, two, three] = [1, 2, 3];
 //Sets and Maps can be converted into a new array instance using from()
 
 const m = new Map()
-    .set(1, 2)
-    .set(3, 4);
+  .set(1, 2)
+  .set(3, 4);
 
 const s = new Set().add(1).add(2).add(3).add(4);
 
@@ -44,21 +44,21 @@ const s = new Set().add(1).add(2).add(3).add(4);
 
 //any iterable object can be used
 const iter = {
-    *[Symbol.iterator]() {
-        yield 1;
-        yield 2;
-        yield 3;
-        yield 4;
-        yield 5;
+  *[Symbol.iterator]() {
+    yield 1;
+    yield 2;
+    yield 3;
+    yield 4;
+    yield 5;
 
-    }
+  }
 }
 
 // console.log(Array.from(iter));
 
 //the arguments objects can now easily be casted into an array:
 function getArgsArray() {
-    return Array.from(arguments);
+  return Array.from(arguments);
 }
 // console.log(getArgsArray(6,7,8,9));
 
@@ -66,8 +66,8 @@ function getArgsArray() {
 //Array.from(object, mapFunction, thisValue);
 
 const a1 = [1, 2, 3, 4];
-const a2 = Array.from(a1, (x) => x**2);
-const a3 = Array.from(a1, function(x) {return x**this.exponent}, {exponent: 2});
+const a2 = Array.from(a1, (x) => x ** 2);
+const a3 = Array.from(a1, function (x) { return x ** this.exponent }, { exponent: 2 });
 
 // console.log(a2);
 // console.log(a3);
@@ -136,15 +136,33 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+
+const displayMovements = (movements) => {
+  containerMovements.innerHTML = '';
+  movements.forEach((mov, i) => {
+    const type = mov > 0 ? 'deposit' : 'withdrawal'
+    const html =
+      `
+    <div class="movements__row">
+    <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
+    <div class="movements__value">${mov}</div>
+  </div>
+    `;
+    containerMovements.insertAdjacentHTML('afterbegin', html);
+})
+};
+
+displayMovements(account1.movements);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
 
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
@@ -171,12 +189,35 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   ;
 // }
 
-movements.forEach((movement) => {
+//getting the  using the index parameter
+movements.forEach((movement, index) => {
   if (movement > 0) {
-        console.log(`you deposited ${movement}`);
-      }
-      else {
-        console.log(`you withdrew ${Math.abs(movement)}`);
-      }
-      ;
+    console.log(`Movement ${index + 1}: you deposited ${movement}`);
+  }
+  else {
+    console.log(`Movement ${index + 1}: you withdrew ${Math.abs(movement)}`);
+  }
+  ;
 })
+
+//forEach With Maps and Sets
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+// currencies.forEach((value, key, map) => {
+//   console.log(`${key}: ${value}`);
+// })
+
+//Set
+// const currenciesUnique = new Set([
+//   ['USD', 'GBP', 'USD', 'EUR', 'EUR']
+// ]);
+
+// currenciesUnique.forEach((value, _, set) => {
+//   console.log(`${value}: ${value}`);
+// })
+
+
