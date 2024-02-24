@@ -149,10 +149,26 @@ const displayMovements = (movements) => {
   </div>
     `;
     containerMovements.insertAdjacentHTML('afterbegin', html);
-})
+  })
 };
 
 displayMovements(account1.movements);
+
+// Map Method
+
+const createUserNames = (accounts) => {
+  accounts.forEach(acc => {
+  acc.username = acc.owner
+  .toLocaleLowerCase()
+  .split(' ')
+  .map(name => name[0])
+  .join('')
+})
+};
+
+createUserNames(accounts)
+console.table(accounts);
+
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -220,4 +236,69 @@ const currencies = new Map([
 //   console.log(`${value}: ${value}`);
 // })
 
+const testData1 = {
+  juliaData: [3, 5, 2, 12, 7],
+  kateData: [4, 1, 15, 8, 3],
+};
 
+const testData2 = {
+  juliaData: [9, 16, 6, 8, 3],
+  kateData: [10, 5, 6, 1, 4],
+};
+
+const testData3 = {
+  juliaData: testData1.juliaData.slice(1, 4),
+  kateData: [4, 1, 15, 8, 3],
+};
+
+const testData4 = {
+  juliaData: testData2.juliaData.slice(1, 4),
+  kateData: [10, 5, 6, 1, 4],
+}
+
+
+// console.log(test.test1);
+
+// const checkDogs = (dogsJulia, dogsKate) => {
+//   dogsJulia.forEach((val, i) => {
+//     if(val >= 3) {
+//       console.log(`Dog number ${i +1} is an adult`);
+//     } else {
+//       console.log(`Dog number ${i + 1} is still a puppy 🐶`);
+//     }
+//   });
+
+//   dogsKate.forEach((val, i) => {
+//     if(val >= 3) {
+//       console.log(`Dog number ${i +1} is an adult`);
+//     } else {
+//       console.log(`Dog number ${i + 1} is still a puppy 🐶`);
+//     }
+//   });
+// }
+
+// const checkDogs = (dogsJulia, dogsKate) => {
+//   const juliaArr = dogsJulia;
+//   juliaArr.forEach((val, i) => {
+//     if (val >= 3) {
+//       console.log(`Dog number ${i + 1} is an adult`);
+//     } else {
+//       console.log(`Dog number ${i + 1} is still a puppy 🐶`);
+//     }
+//   });
+// }
+
+
+// checkDogs(testData3.juliaData, testData3.kateData);
+
+const eurToUsd = 1.1;
+
+const convertor = movements.map((mov) => {
+  return mov * eurToUsd;
+});
+
+
+const movementDiscription = movements.map((mov, i) =>
+  `Movement ${i + 1}: you ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
+
+)
