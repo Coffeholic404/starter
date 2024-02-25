@@ -164,9 +164,22 @@ const calcDisplayBalance = (movements) =>{
 
 calcDisplayBalance(account1.movements);
 
+const calcDisplaySummary = (movements) => {
+  const incomes = movements.filter(mov => mov > 0).reduce((acc, mov) => acc += mov, 0);
+  labelSumIn.textContent = `${incomes}💶`;
 
+  const out = movements.filter(mov => mov < 0).reduce((acc, mov) => acc += mov, 0);
+  labelSumOut.textContent = `${Math.abs(out)}💶`;
 
+  const interest = movements.filter(mov => mov > 0)
+  .map(deposit => deposit * 1.2/100)
+  .filter(int => int >= 1)
+  .reduce((acc, int) => acc += int, 0);
 
+  labelSumInterest.textContent = `${interest}`
+}
+
+calcDisplaySummary(account1.movements)
 // Map Method
 const createUserNames = (accounts) => {
   accounts.forEach(acc => {
@@ -196,18 +209,18 @@ createUserNames(accounts)
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
-let arr = ['a', 'b', 'c', 'd', 'e'];
+// let arr = ['a', 'b', 'c', 'd', 'e'];
 //slice
 // console.log(arr.slice(2)); //['c', 'd', 'e']
 // console.log(arr.slice(2, 4)); //['c', 'd']
 
 //REVERSE
-let arr2 = ['a', 'b', 'c', 'd', 'e'];
+// let arr2 = ['a', 'b', 'c', 'd', 'e'];
 // console.log(arr2.reverse()); //['e', 'd', 'c', 'b', 'a']
 
 
 //looping arrays:forEach
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // for (const movement of movements) {
 //   if (movement > 0) {
 //     console.log(`you deposited ${movement}`);
@@ -230,11 +243,11 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // })
 
 //forEach With Maps and Sets
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
 
 // currencies.forEach((value, key, map) => {
 //   console.log(`${key}: ${value}`);
@@ -338,22 +351,22 @@ const currencies = new Map([
 
 
 //code challenge
-const TEST_DATA_1 = [5, 2, 4, 1, 15, 8, 3];
-const TEST_DATA_2 = [16, 6, 10, 5, 6, 1, 4];
+// const TEST_DATA_1 = [5, 2, 4, 1, 15, 8, 3];
+// const TEST_DATA_2 = [16, 6, 10, 5, 6, 1, 4];
 
-const calcAverageHumanAge = (ages) => {
-const dogsInHumanAge = ages.map((age) => 
-  (age <= 2) ? 2 * age : 16 + age * 4
-  ).filter((age) => age >= 18).reduce(
-    (acc, age, i, arr) => acc + age / arr.length,
-    0
-  ).toFixed(0);
+// const calcAverageHumanAge = (ages) => {
+// const dogsInHumanAge = ages.map((age) => 
+//   (age <= 2) ? 2 * age : 16 + age * 4
+//   ).filter((age) => age >= 18).reduce(
+//     (acc, age, i, arr) => acc + age / arr.length,
+//     0
+//   ).toFixed(0);
   
-  return dogsInHumanAge;
-}
+//   return dogsInHumanAge;
+// }
 
-console.log(calcAverageHumanAge(TEST_DATA_1));
-console.log(calcAverageHumanAge(TEST_DATA_2));
+// console.log(calcAverageHumanAge(TEST_DATA_1));
+// console.log(calcAverageHumanAge(TEST_DATA_2));
 
 // const calcAverageHumanAge = function (ages) {
 //   const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
