@@ -154,8 +154,20 @@ const displayMovements = (movements) => {
 
 displayMovements(account1.movements);
 
-// Map Method
+//Reduce Method
+const calcDisplayBalance = (movements) =>{
+  const balance = movements.reduce((acc, mov) => 
+  acc += mov, 0
+  );
+  labelBalance.textContent = `${balance} EUR`
+};
 
+calcDisplayBalance(account1.movements);
+
+
+
+
+// Map Method
 const createUserNames = (accounts) => {
   accounts.forEach(acc => {
   acc.username = acc.owner
@@ -167,7 +179,8 @@ const createUserNames = (accounts) => {
 };
 
 createUserNames(accounts)
-console.table(accounts);
+
+
 
 
 /////////////////////////////////////////////////
@@ -206,15 +219,15 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // }
 
 //getting the  using the index parameter
-movements.forEach((movement, index) => {
-  if (movement > 0) {
-    console.log(`Movement ${index + 1}: you deposited ${movement}`);
-  }
-  else {
-    console.log(`Movement ${index + 1}: you withdrew ${Math.abs(movement)}`);
-  }
-  ;
-})
+// movements.forEach((movement, index) => {
+//   if (movement > 0) {
+//     console.log(`Movement ${index + 1}: you deposited ${movement}`);
+//   }
+//   else {
+//     console.log(`Movement ${index + 1}: you withdrew ${Math.abs(movement)}`);
+//   }
+//   ;
+// })
 
 //forEach With Maps and Sets
 const currencies = new Map([
@@ -236,25 +249,25 @@ const currencies = new Map([
 //   console.log(`${value}: ${value}`);
 // })
 
-const testData1 = {
-  juliaData: [3, 5, 2, 12, 7],
-  kateData: [4, 1, 15, 8, 3],
-};
+// const testData1 = {
+//   juliaData: [3, 5, 2, 12, 7],
+//   kateData: [4, 1, 15, 8, 3],
+// };
 
-const testData2 = {
-  juliaData: [9, 16, 6, 8, 3],
-  kateData: [10, 5, 6, 1, 4],
-};
+// const testData2 = {
+//   juliaData: [9, 16, 6, 8, 3],
+//   kateData: [10, 5, 6, 1, 4],
+// };
 
-const testData3 = {
-  juliaData: testData1.juliaData.slice(1, 4),
-  kateData: [4, 1, 15, 8, 3],
-};
+// const testData3 = {
+//   juliaData: testData1.juliaData.slice(1, 4),
+//   kateData: [4, 1, 15, 8, 3],
+// };
 
-const testData4 = {
-  juliaData: testData2.juliaData.slice(1, 4),
-  kateData: [10, 5, 6, 1, 4],
-}
+// const testData4 = {
+//   juliaData: testData2.juliaData.slice(1, 4),
+//   kateData: [10, 5, 6, 1, 4],
+// }
 
 
 // console.log(test.test1);
@@ -291,14 +304,75 @@ const testData4 = {
 
 // checkDogs(testData3.juliaData, testData3.kateData);
 
-const eurToUsd = 1.1;
+// const eurToUsd = 1.1;
 
-const convertor = movements.map((mov) => {
-  return mov * eurToUsd;
-});
+// const convertor = movements.map((mov) => {
+//   return mov * eurToUsd;
+// });
 
 
-const movementDiscription = movements.map((mov, i) =>
-  `Movement ${i + 1}: you ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
+// const movementDiscription = movements.map((mov, i) =>
+//   `Movement ${i + 1}: you ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
 
-)
+// )
+
+//filter
+// const deposits = movements.filter((mov) => 
+//    mov > 0
+// )
+// console.log(deposits);
+
+// //reduce
+// const balance = movements.reduce((acc, cur) => 
+//    acc += cur
+// , 0)
+
+// console.log(balance);
+
+
+//Maximum value
+
+// const Maximum = movements.reduce((acc, mov) => (acc > mov) ? acc : mov, 0)
+
+// console.log(Maximum);
+
+
+//code challenge
+const TEST_DATA_1 = [5, 2, 4, 1, 15, 8, 3];
+const TEST_DATA_2 = [16, 6, 10, 5, 6, 1, 4];
+
+const calcAverageHumanAge = (ages) => {
+const dogsInHumanAge = ages.map((age) => 
+  (age <= 2) ? 2 * age : 16 + age * 4
+  ).filter((age) => age >= 18).reduce(
+    (acc, age, i, arr) => acc + age / arr.length,
+    0
+  ).toFixed(0);
+  
+  return dogsInHumanAge;
+}
+
+console.log(calcAverageHumanAge(TEST_DATA_1));
+console.log(calcAverageHumanAge(TEST_DATA_2));
+
+// const calcAverageHumanAge = function (ages) {
+//   const humanAges = ages.map(age => (age <= 2 ? 2 * age : 16 + age * 4));
+//   const adults = humanAges.filter(age => age >= 18);
+//   console.log(humanAges);
+//   console.log(adults);
+  
+//   // const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
+  
+//   const average = adults.reduce(
+//     (acc, age, i, arr) => acc + age / arr.length,
+//     0
+//     );
+    
+//     // 2 3. (2+3)/2 = 2.5 === 2/2+3/2 = 2.5
+    
+//     return average;
+//   };
+  // const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+  // const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+  // console.log(avg1, avg2);
+  
