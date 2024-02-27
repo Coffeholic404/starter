@@ -206,7 +206,7 @@ createUserNames(accounts)
 //   ['GBP', 'Pound sterling'],
 // ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 // let arr = ['a', 'b', 'c', 'd', 'e'];
@@ -389,3 +389,13 @@ createUserNames(accounts)
   // const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
   // console.log(avg1, avg2);
   
+  //* The Find Method
+
+  const firstWithdrawal = movements.find( mov => mov < 0)
+
+  console.log(firstWithdrawal);
+  console.table(accounts)
+
+  const account = accounts.find(acc => acc.owner === 'Jessica Davis')
+
+  console.table(account);
