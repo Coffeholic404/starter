@@ -5,14 +5,14 @@
 
 let taqe = [
   { name: 'Taqe', age: 24 },
-  { name: 'Ali', age: 23 },
+  { name: 'Ali', age: 23 }
 ];
 
 let { name, age } = taqe[0];
 // console.log(`My name is ${name}, and i'm ${age} years old`);//just a classic example 🙂
 
 // plus If we only care about some of the properties, we can omit the others
-let { name: name1 } = taqe[1];//i changed the name here to name1 cus name is already decleared
+let { name: name1 } = taqe[1]; //i changed the name here to name1 cus name is already decleared
 // console.log(name1);
 
 //object are not in order that mean my destructruring varible names order doesn't matter
@@ -21,11 +21,10 @@ let { name: name1 } = taqe[1];//i changed the name here to name1 cus name is alr
 let [one, two, three] = [1, 2, 3];
 // console.log(one, three);
 
-
 //the array constructor has two additional static methods to create arrays: from() and of()
 
 //from() is used for converting array-like constructs into an array instance
-//The first argument to Array.from() is an arraylike object, which is anything that is iterable or has a property length and indexed elements. 
+//The first argument to Array.from() is an arraylike object, which is anything that is iterable or has a property length and indexed elements.
 
 //strings will be broken up into an array instance using from()
 
@@ -33,9 +32,7 @@ let [one, two, three] = [1, 2, 3];
 
 //Sets and Maps can be converted into a new array instance using from()
 
-const m = new Map()
-  .set(1, 2)
-  .set(3, 4);
+const m = new Map().set(1, 2).set(3, 4);
 
 const s = new Set().add(1).add(2).add(3).add(4);
 
@@ -50,9 +47,8 @@ const iter = {
     yield 3;
     yield 4;
     yield 5;
-
   }
-}
+};
 
 // console.log(Array.from(iter));
 
@@ -62,18 +58,23 @@ function getArgsArray() {
 }
 // console.log(getArgsArray(6,7,8,9));
 
-//Array.from() also accepts a second optional map function argument.this allows you to augment the new array's values without creating an intermediate array first, which is the case if the same were performed with Array.from().map(). a third optional argument specifies the value of (this) inside the map function 
+//Array.from() also accepts a second optional map function argument.this allows you to augment the new array's values without creating an intermediate array first, which is the case if the same were performed with Array.from().map(). a third optional argument specifies the value of (this) inside the map function
 //Array.from(object, mapFunction, thisValue);
 
 const a1 = [1, 2, 3, 4];
 const a2 = Array.from(a1, (x) => x ** 2);
-const a3 = Array.from(a1, function (x) { return x ** this.exponent }, { exponent: 2 });
+const a3 = Array.from(
+  a1,
+  function (x) {
+    return x ** this.exponent;
+  },
+  { exponent: 2 }
+);
 
 // console.log(a2);
 // console.log(a3);
 
 //simple Array methods
-
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -84,28 +85,28 @@ const account1 = {
   owner: 'Jonas Schmedtmann',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
-  pin: 1111,
+  pin: 1111
 };
 
 const account2 = {
   owner: 'Jessica Davis',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
-  pin: 2222,
+  pin: 2222
 };
 
 const account3 = {
   owner: 'Steven Thomas Williams',
   movements: [200, -200, 340, -300, -20, 50, 400, -460],
   interestRate: 0.7,
-  pin: 3333,
+  pin: 3333
 };
 
 const account4 = {
   owner: 'Sarah Smith',
   movements: [430, 1000, 700, 50, 90],
   interestRate: 1,
-  pin: 4444,
+  pin: 4444
 };
 
 const accounts = [account1, account2, account3, account4];
@@ -136,71 +137,79 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
-
 const displayMovements = (movements) => {
   containerMovements.innerHTML = '';
   movements.forEach((mov, i) => {
-    const type = mov > 0 ? 'deposit' : 'withdrawal'
-    const html =
-      `
+    const type = mov > 0 ? 'deposit' : 'withdrawal';
+    const html = `
     <div class="movements__row">
     <div class="movements__type movements__type--${type}">${i + 1} ${type}</div>
-    <div class="movements__value">${mov}</div>
+    <div class="movements__value">${mov} €</div>
   </div>
     `;
     containerMovements.insertAdjacentHTML('afterbegin', html);
-  })
+  });
 };
-
-
 
 //Reduce Method
-const calcDisplayBalance = (movements) =>{
-  const balance = movements.reduce((acc, mov) => 
-  acc += mov, 0
-  );
-  labelBalance.textContent = `${balance} EUR`
+const calcDisplayBalance = (acc) => {
+  acc.balance = acc.movements.reduce((acc, mov) => (acc += mov), 0);
+
+  labelBalance.textContent = `${acc.balance} €`;
 };
 
-calcDisplayBalance(account1.movements);
-
 const calcDisplaySummary = (acc) => {
-  const incomes = acc.movements.filter(mov => mov > 0).reduce((acc, mov) => acc += mov, 0);
-  labelSumIn.textContent = `${incomes}💶`;
+  const incomes = acc.movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, mov) => (acc += mov), 0);
+  labelSumIn.textContent = `${incomes}€`;
 
-  const out = acc.movements.filter(mov => mov < 0).reduce((acc, mov) => acc += mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}💶`;
+  const out = acc.movements
+    .filter((mov) => mov < 0)
+    .reduce((acc, mov) => (acc += mov), 0);
+  labelSumOut.textContent = `${Math.abs(out)}€`;
 
-  const interest = acc.movements.filter(mov => mov > 0)
-  .map(deposit => deposit * acc.interestRate/100)
-  .filter(int => int >= 1)
-  .reduce((acc, int) => acc += int, 0).toFixed(2);
+  const interest = acc.movements
+    .filter((mov) => mov > 0)
+    .map((deposit) => (deposit * acc.interestRate) / 100)
+    .filter((int) => int >= 1)
+    .reduce((acc, int) => (acc += int), 0)
+    .toFixed(2);
 
-  labelSumInterest.textContent = `${interest}`
-}
+  labelSumInterest.textContent = `${interest}`;
+};
 
 // Map Method
 const createUserNames = (accounts) => {
-  accounts.forEach(acc => {
-  acc.username = acc.owner
-  .toLocaleLowerCase()
-  .split(' ')
-  .map(name => name[0])
-  .join('')
-})
+  accounts.forEach((acc) => {
+    acc.username = acc.owner
+      .toLocaleLowerCase()
+      .split(' ')
+      .map((name) => name[0])
+      .join('');
+  });
 };
 
-createUserNames(accounts)
+createUserNames(accounts);
 
+const updateUI = (acc) => {
+  //? Display Movements
+  displayMovements(acc.movements);
+  //? Display balance & summary
+  calcDisplayBalance(currentAccount);
+  calcDisplaySummary(currentAccount);
+};
 //* Event handler
 let currentAccount;
 btnLogin.addEventListener('click', (e) => {
   e.preventDefault();
-  
-  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value);
-  console.log(currentAccount);
 
-  if(currentAccount?.pin === Number(inputLoginPin.value)){
+  currentAccount = accounts.find(
+    (acc) => acc.username === inputLoginUsername.value
+  );
+  // console.log(currentAccount);
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
     //? Display UI and message
     labelWelcome.textContent = `Welcome Back, ${currentAccount.owner.split(' ')[0]}`;
     containerApp.style.opacity = 100;
@@ -209,15 +218,33 @@ btnLogin.addEventListener('click', (e) => {
     inputLoginUsername.value = inputLoginPin.value = '';
     inputLoginPin.blur();
 
-    //? Display Movements
-    displayMovements(currentAccount.movements);
-    //? Display balance & summary
-    calcDisplayBalance(currentAccount.movements);
-    calcDisplaySummary(currentAccount);
+    //*Update UI
+    updateUI(currentAccount);
   }
-})
+});
 
+btnTransfer.addEventListener('click', (e) => {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    (acc) => acc.username === inputTransferTo.value
+  );
+  inputTransferAmount.value = inputTransferTo.value = '';
 
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    //* Doing The Transfer
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    //*Update UI
+    updateUI(currentAccount);
+  }
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -240,7 +267,6 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //REVERSE
 // let arr2 = ['a', 'b', 'c', 'd', 'e'];
 // console.log(arr2.reverse()); //['e', 'd', 'c', 'b', 'a']
-
 
 //looping arrays:forEach
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
@@ -305,7 +331,6 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   kateData: [10, 5, 6, 1, 4],
 // }
 
-
 // console.log(test.test1);
 
 // const checkDogs = (dogsJulia, dogsKate) => {
@@ -337,7 +362,6 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   });
 // }
 
-
 // checkDogs(testData3.juliaData, testData3.kateData);
 
 // const eurToUsd = 1.1;
@@ -346,25 +370,23 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   return mov * eurToUsd;
 // });
 
-
 // const movementDiscription = movements.map((mov, i) =>
 //   `Movement ${i + 1}: you ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}`
 
 // )
 
 //filter
-// const deposits = movements.filter((mov) => 
+// const deposits = movements.filter((mov) =>
 //    mov > 0
 // )
 // console.log(deposits);
 
 // //reduce
-// const balance = movements.reduce((acc, cur) => 
+// const balance = movements.reduce((acc, cur) =>
 //    acc += cur
 // , 0)
 
 // console.log(balance);
-
 
 //Maximum value
 
@@ -372,19 +394,18 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 // console.log(Maximum);
 
-
 //code challenge
 // const TEST_DATA_1 = [5, 2, 4, 1, 15, 8, 3];
 // const TEST_DATA_2 = [16, 6, 10, 5, 6, 1, 4];
 
 // const calcAverageHumanAge = (ages) => {
-// const dogsInHumanAge = ages.map((age) => 
+// const dogsInHumanAge = ages.map((age) =>
 //   (age <= 2) ? 2 * age : 16 + age * 4
 //   ).filter((age) => age >= 18).reduce(
 //     (acc, age, i, arr) => acc + age / arr.length,
 //     0
 //   ).toFixed(0);
-  
+
 //   return dogsInHumanAge;
 // }
 
@@ -396,29 +417,29 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //   const adults = humanAges.filter(age => age >= 18);
 //   console.log(humanAges);
 //   console.log(adults);
-  
+
 //   // const average = adults.reduce((acc, age) => acc + age, 0) / adults.length;
-  
+
 //   const average = adults.reduce(
 //     (acc, age, i, arr) => acc + age / arr.length,
 //     0
 //     );
-    
+
 //     // 2 3. (2+3)/2 = 2.5 === 2/2+3/2 = 2.5
-    
+
 //     return average;
 //   };
-  // const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
-  // const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
-  // console.log(avg1, avg2);
-  
-  //* The Find Method
+// const avg1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
+// const avg2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
+// console.log(avg1, avg2);
 
-  // const firstWithdrawal = movements.find( mov => mov < 0)
+//* The Find Method
 
-  // console.log(firstWithdrawal);
-  // console.table(accounts)
+// const firstWithdrawal = movements.find( mov => mov < 0)
 
-  // const account = accounts.find(acc => acc.owner === 'Jessica Davis')
+// console.log(firstWithdrawal);
+// console.table(accounts)
 
-  // console.table(account);
+// const account = accounts.find(acc => acc.owner === 'Jessica Davis')
+
+// console.table(account);
