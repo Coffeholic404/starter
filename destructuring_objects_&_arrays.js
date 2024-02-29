@@ -246,6 +246,22 @@ btnTransfer.addEventListener('click', (e) => {
   }
 });
 
+btnLoan.addEventListener('click', (e) => {
+  e.preventDefault();
+  const amount = Number(inputLoanAmount.value)
+
+  if(amount > 0 && currentAccount.movements.some(mov => 
+    mov >= amount * 0.1
+  )) {
+    //* Add movement
+    currentAccount.movements.push(amount);
+
+    // Update UI
+    updateUI(currentAccount)
+  }
+  inputLoanAmount.value = '';
+})
+
 btnClose.addEventListener('click', (e) => {
   e.preventDefault();
   if (
@@ -275,7 +291,7 @@ btnClose.addEventListener('click', (e) => {
 //   ['GBP', 'Pound sterling'],
 // ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 /////////////////////////////////////////////////
 // let arr = ['a', 'b', 'c', 'd', 'e'];
@@ -462,3 +478,10 @@ btnClose.addEventListener('click', (e) => {
 // const account = accounts.find(acc => acc.owner === 'Jessica Davis')
 
 // console.table(account);
+
+//* EVERY
+//! evey only returns true if all the elements in the array satisfy the condition that we passed in 
+// console.log(movements.every(mov => mov > 0)); //! false
+// console.log(account4.movements.every(mov => mov > 0)); //* true
+
+
