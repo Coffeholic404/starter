@@ -485,3 +485,18 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // console.log(account4.movements.every(mov => mov > 0)); //* true
 
 
+//* Flat & flatMap
+// const arr = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
+// console.log(arr.flat());
+
+// const arrDeep = [[[1, 2], 3, [4, [5, 6]], 7, 8]];
+// console.log(arrDeep.flat(3));
+
+const overalBalance = accounts.map(acc => acc.movements).flat().reduce((acc, mov)=> acc + mov, 0);
+console.log(overalBalance);
+
+const overalBalance2 = accounts.flatMap(acc => acc.movements).reduce((acc, mov)=> acc + mov, 0);
+console.log(overalBalance2);
+
+
+
