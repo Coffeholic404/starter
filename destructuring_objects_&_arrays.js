@@ -579,10 +579,11 @@ console.table(sums);
 
 // 4. create a simple function to convert  any string to a title case
 const convertTitleCase = (title) => {
-  const expections = ['a', 'an', 'the', 'but', 'or', 'on', 'in', 'with'];
+  const capitzalize = str => str[0].toUpperCase() + str.slice(1);
+  const expections = ['a', 'an', 'the', 'but', 'or', 'and', 'on', 'in', 'with'];
 
-  const titleCase = title.toLocaleLowerCase().split(' ').map(word => expections.includes(word) ? word : word[0].toUpperCase() + word.slice(1)).join(' ')
-  return titleCase
+  const titleCase = title.toLocaleLowerCase().split(' ').map(word => expections.includes(word) ? word : capitzalize(word)).join(' ')
+  return capitzalize(titleCase);
 }
 
 console.log(convertTitleCase('this is a nice title'));
