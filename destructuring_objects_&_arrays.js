@@ -566,3 +566,13 @@ console.log(bankDepositSum);
 
 const numDeposits1000 = accounts.flatMap(acc => acc.movements).reduce((acc, mov) =>(mov >= 1000 ? acc + 1 : acc), 0)
 console.log(numDeposits1000);
+
+
+// 3. create new object instead of just number or just a string
+const sums = accounts.flatMap(acc => acc.movements).reduce((sums, cur) => {
+  // cur > 0 ? sums.deposit += cur : sums.withdrawals += cur;
+  sums[cur > 0 ? 'deposit' : 'withdrawals'] += cur;
+  return sums;
+}, {deposit: 0, withdrawals: 0});
+
+console.table(sums);
