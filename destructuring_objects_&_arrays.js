@@ -576,3 +576,15 @@ const sums = accounts.flatMap(acc => acc.movements).reduce((sums, cur) => {
 }, {deposit: 0, withdrawals: 0});
 
 console.table(sums);
+
+// 4. create a simple function to convert  any string to a title case
+const convertTitleCase = (title) => {
+  const expections = ['a', 'an', 'the', 'but', 'or', 'on', 'in', 'with'];
+
+  const titleCase = title.toLocaleLowerCase().split(' ').map(word => expections.includes(word) ? word : word[0].toUpperCase() + word.slice(1)).join(' ')
+  return titleCase
+}
+
+console.log(convertTitleCase('this is a nice title'));
+console.log(convertTitleCase('this is a LONG title but not to long'));
+console.log(convertTitleCase('and here is another title with an EXAMPLE'));
