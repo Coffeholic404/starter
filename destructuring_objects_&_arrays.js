@@ -549,8 +549,20 @@ const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
 //* Array Methods Practice
 // 1.
-const banckDepositSum = accounts.flatMap(acc => acc.movements).filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
+const bankDepositSum = accounts.flatMap(acc => acc.movements).filter(mov => mov > 0).reduce((acc, mov) => acc + mov, 0);
 
-console.log(banckDepositSum);
+console.log(bankDepositSum);
 
+// 2. how many deposits there have been in the bank at leaste $1,000.
 
+// const numDeposits1000 = accounts.flatMap(acc => acc.movements).filter(mov => mov >= 1000).length;
+
+// const numDeposits1000 = accounts.flatMap(acc => acc.movements).reduce((acc, mov) => {
+//   if(mov >= 1000){
+//     acc++
+//   }
+//   return acc;
+// }, 0)
+
+const numDeposits1000 = accounts.flatMap(acc => acc.movements).reduce((acc, mov) =>(mov >= 1000 ? acc + 1 : acc), 0)
+console.log(numDeposits1000);
