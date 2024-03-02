@@ -10,4 +10,7 @@ request.open('GET', 'https://restcountries.com/v3.1/name/portugal');
 request.send();//*fetch the data in the background
 
 //* Register a callBack on the request object for the load event
-request.addEventListener('load', () => console.log(request.responseText));
+request.addEventListener('load', () => {
+    const [data] = JSON.parse(request.responseText);
+    console.log(data);
+})
