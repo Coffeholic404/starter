@@ -43,33 +43,30 @@ const countriesContainer = document.querySelector('.countries');
 //   });
 // };
 
-// const renderCountry = (data, className = '') => {
-//   const { languages, currencies} = data;
-//   const currenciesArr = Object.keys(currencies).map(key => [
-//     key,
-//     currencies[key],
-//   ]);
-//   const languagesArr = Object.keys(languages).map(key => [
-//     key,
-//     languages[key],
-//   ]);
-//   const html = `
-//   <article class="country ${className}">
-//   <img class="country__img" src="${data.flags.png}" />
-//   <div class="country__data">
-//     <h3 class="country__name">${data.name.common}</h3>
-//     <h4 class="country__region">${data.region}</h4>
-//     <p class="country__row"><span>👫</span>${(
-//       +data.population / 1000000
-//     ).toFixed(1)}</p>
-//     <p class="country__row"><span>🗣️</span>${languagesArr[0][1]}</p>
-//     <p class="country__row"><span>💰</span>${currenciesArr[0][0]}</p>
-//   </div>
-// </article>
-//   `;
-//   countriesContainer.insertAdjacentHTML('beforeend', html);
-//   countriesContainer.style.opacity = 1;
-// }
+const renderCountry = (data, className = '') => {
+  const { languages, currencies } = data;
+  const currenciesArr = Object.keys(currencies).map(key => [
+    key,
+    currencies[key],
+  ]);
+  const languagesArr = Object.keys(languages).map(key => [key, languages[key]]);
+  const html = `
+  <article class="country ${className}">
+  <img class="country__img" src="${data.flags.png}" />
+  <div class="country__data">
+    <h3 class="country__name">${data.name.common}</h3>
+    <h4 class="country__region">${data.region}</h4>
+    <p class="country__row"><span>👫</span>${(
+      +data.population / 1000000
+    ).toFixed(1)}</p>
+    <p class="country__row"><span>🗣️</span>${languagesArr[0][1]}</p>
+    <p class="country__row"><span>💰</span>${currenciesArr[0][0]}</p>
+  </div>
+</article>
+  `;
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = 1;
+};
 
 // const getCountryAndNeighbour = function (country) {
 //   //* AJAX call country 1
@@ -110,13 +107,16 @@ const countriesContainer = document.querySelector('.countries');
 // getCountryData('usa');
 
 //! AJAX request the modern way (Fetch API)
-// const request = new XMLHttpRequest();
-//   request.open('GET', `https://restcountries.com/v3.1/name/${country}`);
-//   request.send(); //*fetch the data in the background
-
-const request = fetch('https://restcountries.com/v3.1/name/portugal');
-console.log(request);
 //* promise: An object that is used as placeholder for the future result of an asynchronous operation
 //! A container for a futuere value(like a response from AJAX call)
 
-
+const getCountryData = function (country) {
+  fetch(`https://restcountries.com/v3.1/name/${country}`)
+    .then(
+      response => response.json() //* using json method to read the data,it will also return a promise so we should return that promise
+    )
+    .then(
+      data => renderCountry(data[0]) //* here we can really get access to the data
+    );
+};
+getCountryData('portugal');
