@@ -44,12 +44,11 @@ const countriesContainer = document.querySelector('.countries');
 // };
 
 const renderCountry = (data, className = '') => {
-  const { languages, currencies } = data;
-  const currenciesArr = Object.keys(currencies).map(key => [
-    key,
-    currencies[key],
-  ]);
-  const languagesArr = Object.keys(languages).map(key => [key, languages[key]]);
+  // console.log(data);
+  // const { languages, currencies } = data;
+  const curr = Object.keys(data.currencies)
+  // console.log(curr);
+ 
   const html = `
   <article class="country ${className}">
   <img class="country__img" src="${data.flags.png}" />
@@ -59,8 +58,8 @@ const renderCountry = (data, className = '') => {
     <p class="country__row"><span>👫</span>${(
       +data.population / 1000000
     ).toFixed(1)}</p>
-    <p class="country__row"><span>🗣️</span>${languagesArr[0][1]}</p>
-    <p class="country__row"><span>💰</span>${currenciesArr[0][0]}</p>
+    <p class="country__row"><span>🗣️</span>${Object.values(data.languages)[0]}</p>
+    <p class="country__row"><span>💰</span>${curr}</p>
   </div>
 </article>
   `;
@@ -111,12 +110,23 @@ const renderCountry = (data, className = '') => {
 //! A container for a futuere value(like a response from AJAX call)
 
 const getCountryData = function (country) {
+  // country 1
   fetch(`https://restcountries.com/v3.1/name/${country}`)
     .then(
       response => response.json() //* using json method to read the data,it will also return a promise so we should return that promise
     )
     .then(
-      data => renderCountry(data[0]) //* here we can really get access to the data
-    );
+      data => {
+        renderCountry(data[0]) //* here we can really get access to the data
+        const neighbour = data[0].borders[0];
+        //Country 2
+        return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`)
+        
+      } 
+    ).then(response => response.json()).then(data => { 
+      const [data2] = data
+      // console.log(data2);
+      renderCountry(data2, 'neighbour')
+    });
 };
-getCountryData('portugal');
+getCountryData('bg');
