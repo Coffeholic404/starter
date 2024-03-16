@@ -2,6 +2,35 @@
 
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
+
+const renderError = function (msg) {
+  countriesContainer.insertAdjacentText('beforeend', msg);
+  // countriesContainer.style.opacity = 1;
+}
+
+const renderCountry = (data, className = '') => {
+  // console.log(data);
+  // const { languages, currencies } = data;
+  const curr = Object.keys(data.currencies)
+  // console.log(curr);
+
+  const html = `
+  <article class="country ${className}">
+  <img class="country__img" src="${data.flags.png}" />
+  <div class="country__data">
+    <h3 class="country__name">${data.name.common}</h3>
+    <h4 class="country__region">${data.region}</h4>
+    <p class="country__row"><span>👫</span>${(
+      +data.population / 1000000
+    ).toFixed(1)}</p>
+    <p class="country__row"><span>🗣️</span>${Object.values(data.languages)[0]}</p>
+    <p class="country__row"><span>💰</span>${curr}</p>
+  </div>
+</article>
+  `;
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  // countriesContainer.style.opacity = 1;
+};
 ///////////////////////////////////////
 //! AJAX request the old school way (XML HTTP request)
 // const getCountryData = function (country) {
@@ -43,29 +72,7 @@ const countriesContainer = document.querySelector('.countries');
 //   });
 // };
 
-const renderCountry = (data, className = '') => {
-  // console.log(data);
-  // const { languages, currencies } = data;
-  const curr = Object.keys(data.currencies)
-  // console.log(curr);
- 
-  const html = `
-  <article class="country ${className}">
-  <img class="country__img" src="${data.flags.png}" />
-  <div class="country__data">
-    <h3 class="country__name">${data.name.common}</h3>
-    <h4 class="country__region">${data.region}</h4>
-    <p class="country__row"><span>👫</span>${(
-      +data.population / 1000000
-    ).toFixed(1)}</p>
-    <p class="country__row"><span>🗣️</span>${Object.values(data.languages)[0]}</p>
-    <p class="country__row"><span>💰</span>${curr}</p>
-  </div>
-</article>
-  `;
-  countriesContainer.insertAdjacentHTML('beforeend', html);
-  countriesContainer.style.opacity = 1;
-};
+
 
 // const getCountryAndNeighbour = function (country) {
 //   //* AJAX call country 1
@@ -109,11 +116,15 @@ const renderCountry = (data, className = '') => {
 //* promise: An object that is used as placeholder for the future result of an asynchronous operation
 //! A container for a futuere value(like a response from AJAX call)
 
+
+
 const getCountryData = function (country) {
   // country 1
+  //* using json method to read the data,it will also return a promise so we should return that promise
+
   fetch(`https://restcountries.com/v3.1/name/${country}`)
     .then(
-      response => response.json() //* using json method to read the data,it will also return a promise so we should return that promise
+      response => response.json()
     )
     .then(
       data => {
@@ -121,12 +132,21 @@ const getCountryData = function (country) {
         const neighbour = data[0].borders[0];
         //Country 2
         return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`)
-        
-      } 
-    ).then(response => response.json()).then(data => { 
+
+      }
+    ).then(response => response.json()).then(data => {
       const [data2] = data
-      // console.log(data2);
+      console.log(data2);
       renderCountry(data2, 'neighbour')
-    });
+    }).catch(err => alert(err))
+    .finally(() => {
+      countriesContainer.style.opacity = 1;
+    })
 };
-getCountryData('bg');
+btn.addEventListener('click', function () {
+  getCountryData('bg');
+  console.error(`${err}`);
+  renderError(`something went wrong ${err.message}`)
+})
+
+
